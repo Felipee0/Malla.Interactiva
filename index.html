@@ -2,43 +2,176 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Malla Interactiva</title>
+  <title>Pénsum Psicología - Malla Interactiva</title>
   <style>
     body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff0f5;
       margin: 0;
-      background: #111;
+      padding: 40px 20px;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      height: 100vh;
+      color: #333;
     }
+
+    h1 {
+      text-align: center;
+      color: #d63384;
+      margin-bottom: 40px;
+    }
+
     .grid {
       display: grid;
-      grid-template-columns: repeat(20, 20px);
-      grid-template-rows: repeat(20, 20px);
-      gap: 2px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      width: 100%;
     }
-    .cell {
-      width: 20px;
-      height: 20px;
-      background: #333;
-      transition: background 0.3s;
+
+    .semester {
+      background: linear-gradient(145deg, #ffc0cb, #ffe4e1);
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      padding: 20px;
+      transition: transform 0.3s;
     }
-    .cell:hover {
-      background: #0ff;
+
+    .semester:hover {
+      transform: translateY(-5px);
+    }
+
+    .semester h2 {
+      margin-top: 0;
+      font-size: 1.2em;
+      color: #c71585;
+    }
+
+    .subject {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px dotted #d88aaa;
+    }
+
+    .total {
+      margin-top: 10px;
+      font-weight: bold;
+      text-align: right;
+      color: #880e4f;
+    }
+
+    @media (max-width: 600px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="grid" id="grid"></div>
+  <h1>Pénsum de Psicología Bogotá</h1>
+  <div class="grid">
 
-  <script>
-    const grid = document.getElementById('grid');
-    for (let i = 0; i < 400; i++) {
-      const cell = document.createElement('div');
-      cell.classList.add('cell');
-      grid.appendChild(cell);
-    }
-  </script>
+    <!-- Semestre 1 -->
+    <div class="semester">
+      <h2>Semestre 1</h2>
+      <div class="subject">Humanidades I <span>2</span></div>
+      <div class="subject">Inglés I <span>2</span></div>
+      <div class="subject">Problemas Sociales Globales <span>3</span></div>
+      <div class="subject">Aspectos Psicológicos del Comportamiento Humano <span>2</span></div>
+      <div class="subject">Filosofía e Historia de la Psicología <span>4</span></div>
+      <div class="subject">Psicobiología <span>3</span></div>
+      <div class="total">Total: 16</div>
+    </div>
+
+    <!-- Semestre 2 -->
+    <div class="semester">
+      <h2>Semestre 2</h2>
+      <div class="subject">Enfoque en Psicología Dinámica <span>3</span></div>
+      <div class="subject">Psicología Conductual <span>3</span></div>
+      <div class="subject">Estadística Descriptiva a Inferencial <span>3</span></div>
+      <div class="subject">Procesos Psicológicos Básicos y Complejos <span>4</span></div>
+      <div class="subject">Inglés II <span>2</span></div>
+      <div class="subject">Humanidades II <span>2</span></div>
+      <div class="subject">Neurociencia Cognitiva y del Comportamiento <span>2</span></div>
+      <div class="total">Total: 19</div>
+    </div>
+
+    <!-- Semestre 3 -->
+    <div class="semester">
+      <h2>Semestre 3</h2>
+      <div class="subject">Psicología Diferencial <span>3</span></div>
+      <div class="subject">Psicología Social <span>3</span></div>
+      <div class="subject">Psicología Cognitiva <span>3</span></div>
+      <div class="subject">Psicología Sistémica <span>3</span></div>
+      <div class="subject">Medición y Evaluación Psicológica <span>2</span></div>
+      <div class="subject">Inglés III <span>2</span></div>
+      <div class="subject">Humanidades III <span>2</span></div>
+      <div class="total">Total: 18</div>
+    </div>
+
+    <!-- Semestre 4 -->
+    <div class="semester">
+      <h2>Semestre 4</h2>
+      <div class="subject">Psicopatología <span>4</span></div>
+      <div class="subject">Procesos Psicosociales <span>2</span></div>
+      <div class="subject">Psicología Humanista <span>3</span></div>
+      <div class="subject">Semiología Psicológica <span>2</span></div>
+      <div class="subject">Psicología Evolutiva <span>3</span></div>
+      <div class="subject">Neuropsicología <span>2</span></div>
+      <div class="subject">Inglés IV <span>2</span></div>
+      <div class="total">Total: 18</div>
+    </div>
+
+    <!-- Semestre 5 -->
+    <div class="semester">
+      <h2>Semestre 5</h2>
+      <div class="subject">Psicología Organizacional <span>3</span></div>
+      <div class="subject">Psicología Comunitaria <span>3</span></div>
+      <div class="subject">Psicología Jurídica <span>3</span></div>
+      <div class="subject">Modelos Psicodiagnósticos <span>2</span></div>
+      <div class="subject">Psicología Educativa <span>3</span></div>
+      <div class="subject">Epistemologías <span>3</span></div>
+      <div class="total">Total: 20</div>
+    </div>
+
+    <!-- Semestre 6 -->
+    <div class="semester">
+      <h2>Semestre 6</h2>
+      <div class="subject">Técnicas de Intervención <span>4</span></div>
+      <div class="subject">Práctica Clínica <span>6</span></div>
+      <div class="subject">Curso Optativo I <span>2</span></div>
+      <div class="subject">Diseños de Investigación <span>3</span></div>
+      <div class="subject">Informes Psicológicos <span>2</span></div>
+      <div class="subject">Institucional I <span>2</span></div>
+      <div class="total">Total: 19</div>
+    </div>
+
+    <!-- Semestre 7 -->
+    <div class="semester">
+      <h2>Semestre 7</h2>
+      <div class="subject">Electiva I <span>2</span></div>
+      <div class="subject">Práctica Optativa I <span>6</span></div>
+      <div class="subject">Curso Optativo II <span>2</span></div>
+      <div class="subject">Proyectos de Investigación Social <span>3</span></div>
+      <div class="subject">Institucional II <span>2</span></div>
+      <div class="subject">Problemática Colombiana <span>3</span></div>
+      <div class="total">Total: 18</div>
+    </div>
+
+    <!-- Semestre 8 -->
+    <div class="semester">
+      <h2>Semestre 8</h2>
+      <div class="subject">Electiva II <span>2</span></div>
+      <div class="subject">Institucional III <span>2</span></div>
+      <div class="subject">Práctica Optativa II <span>6</span></div>
+      <div class="subject">Trabajo de Grado <span>4</span></div>
+      <div class="subject">Dinámica Sociocultural <span>3</span></div>
+      <div class="subject">Curso Optativo III <span>2</span></div>
+      <div class="total">Total: 19</div>
+    </div>
+
+  </div>
 </body>
 </html>
+
