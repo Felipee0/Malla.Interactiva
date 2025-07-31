@@ -1,182 +1,153 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { CheckCircle } from "lucide-react";
-
-const semesters = [
-  {
-    name: "Semestre 1",
-    credits: 16,
-    subjects: [
-      "Humanidades I",
-      "Inglés I",
-      "Problemas Sociales Globales",
-      "Aspectos Psicológicos del Comportamiento Humano",
-      "Filosofía e Historia de la Psicología",
-      "Psicobiología"
-    ]
-  },
-  {
-    name: "Semestre 2",
-    credits: 19,
-    subjects: [
-      "Enfoque y Tendencias en Psicología Dinámica",
-      "Enfoque y Tendencias en Psicología Conductual",
-      "Estadística Descriptiva e Inferencial",
-      "Procesos Psicológicos Básicos y Complejos",
-      "Inglés II",
-      "Humanidades II",
-      "Neurociencia Cognitiva y del Comportamiento"
-    ]
-  },
-  {
-    name: "Semestre 3",
-    credits: 18,
-    subjects: [
-      "Psicología Diferencial",
-      "Enfoque y Tendencias en Psicología Social",
-      "Enfoque y Tendencias en Psicología Cognitiva",
-      "Enfoque y Tendencias en Psicología Sistémica",
-      "Medición y Evaluación de Procesos Psicológicos Básicos y Complejos",
-      "Inglés III",
-      "Humanidades III"
-    ]
-  },
-  {
-    name: "Semestre 4",
-    credits: 18,
-    subjects: [
-      "Psicopatología",
-      "Procesos Psicosociales de los Grupos y la Familia",
-      "Enfoque y Tendencias en Psicología Humanista",
-      "Semiología Psicológica",
-      "Psicología Evolutiva",
-      "Neuropsicología",
-      "Inglés IV"
-    ]
-  },
-  {
-    name: "Semestre 5",
-    credits: 20,
-    subjects: [
-      "Psicología en el Campo de las Organizaciones",
-      "Psicología en el Campo Social Comunitario",
-      "Psicología en el Campo Jurídico",
-      "Modelos Psicodiagnósticos",
-      "Psicología en el Campo Educativo",
-      "Epistemologías de las Ciencias Sociales"
-    ]
-  },
-  {
-    name: "Semestre 6",
-    credits: 19,
-    subjects: [
-      "Metodologías y Técnicas de Intervención Psicosocial",
-      "Práctica Clínica",
-      "Curso Optativo I",
-      "Diseños de Investigación",
-      "Informes Psicológicos",
-      "Institucional I"
-    ]
-  },
-  {
-    name: "Semestre 7",
-    credits: 18,
-    subjects: [
-      "Electiva I",
-      "Práctica Optativa I",
-      "Curso Optativo II",
-      "Formulación de Proyectos de Investigación e Intervención Social",
-      "Institucional II",
-      "Problemática Social Colombiana"
-    ]
-  },
-  {
-    name: "Semestre 8",
-    credits: 19,
-    subjects: [
-      "Electiva II",
-      "Institucional III",
-      "Práctica Optativa II",
-      "Trabajo de Grado",
-      "Dinámica Sociocultural Colombiana",
-      "Curso Optativo III"
-    ]
-  }
-];
-
-export default function PensumInteractivo() {
-  const [completed, setCompleted] = useState(() => {
-    const stored = localStorage.getItem("completedSemesters");
-    return stored ? JSON.parse(stored) : Array(semesters.length).fill(false);
-  });
-
-  useEffect(() => {
-    localStorage.setItem("completedSemesters", JSON.stringify(completed));
-  }, [completed]);
-
-  const toggleComplete = (index) => {
-    const newCompleted = [...completed];
-    newCompleted[index] = !newCompleted[index];
-    setCompleted(newCompleted);
-  };
-
-  const completedCount = completed.filter(Boolean).length;
-  const progress = (completedCount / semesters.length) * 100;
-
-  const messages = [
-    "¡Vamos, tú puedes!",
-    "¡Excelente progreso!",
-    "¡Ya falta poco!",
-    "¡Casi terminas!",
-    "¡Lo lograste!"
-  ];
-
-  const getMotivationalMessage = () => {
-    const index = Math.min(
-      Math.floor((completedCount / semesters.length) * messages.length),
-      messages.length - 1
-    );
-    return messages[index];
-  };
-
-  return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4 text-center">Pénsum de Psicología Bogotá</h1>
-      <Progress value={progress} className="mb-4" />
-      <p className="text-center mb-6 font-medium">{getMotivationalMessage()}</p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {semesters.map((sem, i) => (
-          <Card
-            key={i}
-            className={`transition-opacity duration-300 ${
-              completed[i] ? "opacity-50" : "opacity-100"
-            }`}
-          >
-            <CardContent className="p-4">
-              <div className="flex justify-between items-center mb-2">
-                <h2 className="text-lg font-semibold">{sem.name}</h2>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => toggleComplete(i)}
-                >
-                  <CheckCircle className="w-4 h-4 mr-1" /> Marcar
-                </Button>
-              </div>
-              <ul className="mb-2">
-                {sem.subjects.map((subj, j) => (
-                  <li key={j} className="text-sm list-disc ml-4">
-                    {subj}
-                  </li>
-                ))}
-              </ul>
-              <p className="text-right text-sm font-medium">Total: {sem.credits} créditos</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pénsum de Psicología</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f8f8fc;
+    }
+    h1 {
+      text-align: center;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      padding: 1rem;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+    .card.completed {
+      opacity: 0.5;
+    }
+    .card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card ul {
+      padding-left: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    .card ul li {
+      font-size: 0.9rem;
+    }
+    .top-bar {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .progress-bar {
+      height: 20px;
+      background: #eee;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+    .progress-fill {
+      height: 100%;
+      background: #4f46e5;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    .btn {
+      background: #4f46e5;
+      color: white;
+      padding: 0.3rem 0.7rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Pénsum de Psicología Bogotá</h1>
+  <div class="top-bar">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress"></div>
     </div>
-  );
-}
+    <p id="message">¡Vamos, tú puedes!</p>
+  </div>
+  <div class="grid" id="grid"></div>
+
+  <script>
+    const semesters = [
+      { name: "Semestre 1", credits: 16, subjects: ["Humanidades I", "Inglés I", "Problemas Sociales Globales", "Aspectos Psicológicos del Comportamiento Humano", "Filosofía e Historia de la Psicología", "Psicobiología"] },
+      { name: "Semestre 2", credits: 19, subjects: ["Enfoque y Tendencias en Psicología Dinámica", "Enfoque y Tendencias en Psicología Conductual", "Estadística Descriptiva e Inferencial", "Procesos Psicológicos Básicos y Complejos", "Inglés II", "Humanidades II", "Neurociencia Cognitiva y del Comportamiento"] },
+      { name: "Semestre 3", credits: 18, subjects: ["Psicología Diferencial", "Enfoque y Tendencias en Psicología Social", "Enfoque y Tendencias en Psicología Cognitiva", "Enfoque y Tendencias en Psicología Sistémica", "Medición y Evaluación de Procesos Psicológicos Básicos y Complejos", "Inglés III", "Humanidades III"] },
+      { name: "Semestre 4", credits: 18, subjects: ["Psicopatología", "Procesos Psicosociales de los Grupos y la Familia", "Enfoque y Tendencias en Psicología Humanista", "Semiología Psicológica", "Psicología Evolutiva", "Neuropsicología", "Inglés IV"] },
+      { name: "Semestre 5", credits: 20, subjects: ["Psicología en el Campo de las Organizaciones", "Psicología en el Campo Social Comunitario", "Psicología en el Campo Jurídico", "Modelos Psicodiagnósticos", "Psicología en el Campo Educativo", "Epistemologías de las Ciencias Sociales"] },
+      { name: "Semestre 6", credits: 19, subjects: ["Metodologías y Técnicas de Intervención Psicosocial", "Práctica Clínica", "Curso Optativo I", "Diseños de Investigación", "Informes Psicológicos", "Institucional I"] },
+      { name: "Semestre 7", credits: 18, subjects: ["Electiva I", "Práctica Optativa I", "Curso Optativo II", "Formulación de Proyectos de Investigación e Intervención Social", "Institucional II", "Problemática Social Colombiana"] },
+      { name: "Semestre 8", credits: 19, subjects: ["Electiva II", "Institucional III", "Práctica Optativa II", "Trabajo de Grado", "Dinámica Sociocultural Colombiana", "Curso Optativo III"] }
+    ];
+
+    const messages = [
+      "¡Vamos, tú puedes!",
+      "¡Excelente progreso!",
+      "¡Ya falta poco!",
+      "¡Casi terminas!",
+      "¡Lo lograste!"
+    ];
+
+    const grid = document.getElementById("grid");
+    const progress = document.getElementById("progress");
+    const message = document.getElementById("message");
+
+    let completed = JSON.parse(localStorage.getItem("completedSemesters")) || Array(semesters.length).fill(false);
+
+    function updateProgress() {
+      const count = completed.filter(Boolean).length;
+      const percentage = (count / semesters.length) * 100;
+      progress.style.width = percentage + "%";
+      const index = Math.min(Math.floor((count / semesters.length) * messages.length), messages.length - 1);
+      message.textContent = messages[index];
+    }
+
+    function render() {
+      grid.innerHTML = "";
+      semesters.forEach((sem, i) => {
+        const card = document.createElement("div");
+        card.className = "card" + (completed[i] ? " completed" : "");
+        const title = document.createElement("h2");
+        title.textContent = sem.name;
+        const btn = document.createElement("button");
+        btn.className = "btn";
+        btn.textContent = "Marcar";
+        btn.onclick = () => {
+          completed[i] = !completed[i];
+          localStorage.setItem("completedSemesters", JSON.stringify(completed));
+          render();
+        };
+        const ul = document.createElement("ul");
+        sem.subjects.forEach((sub) => {
+          const li = document.createElement("li");
+          li.textContent = sub;
+          ul.appendChild(li);
+        });
+        const credits = document.createElement("p");
+        credits.textContent = `Total: ${sem.credits} créditos`;
+        credits.style.textAlign = "right";
+        credits.style.fontWeight = "bold";
+        card.appendChild(title);
+        card.appendChild(btn);
+        card.appendChild(ul);
+        card.appendChild(credits);
+        grid.appendChild(card);
+      });
+      updateProgress();
+    }
+
+    render();
+  </script>
+</body>
+</html>
+
