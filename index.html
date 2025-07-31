@@ -1,177 +1,241 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
-  <title>Pénsum Psicología - Malla Interactiva</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Malla Interactiva Psicología</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fff0f5;
       margin: 0;
-      padding: 40px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      font-family: 'Quicksand', sans-serif;
+      background: #ffeef8;
       color: #333;
     }
 
-    h1 {
+    header {
       text-align: center;
-      color: #d63384;
-      margin-bottom: 40px;
+      background: linear-gradient(to right, #ffb6c1, #ffc0cb);
+      color: white;
+      padding: 20px 10px;
+      font-size: 24px;
+      position: sticky;
+      top: 0;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-      max-width: 1200px;
-      width: 100%;
-    }
-
-    .semester {
-      background: linear-gradient(145deg, #ffc0cb, #ffe4e1);
-      border-radius: 20px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-      padding: 20px;
-      transition: transform 0.3s;
-    }
-
-    .semester:hover {
-      transform: translateY(-5px);
-    }
-
-    .semester h2 {
-      margin-top: 0;
-      font-size: 1.2em;
-      color: #c71585;
-    }
-
-    .subject {
+    .container {
       display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .semestre {
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin: 10px;
+      padding: 20px;
+      width: 280px;
+      transition: opacity 0.3s;
+      position: relative;
+    }
+
+    .semestre.completado {
+      opacity: 0.5;
+    }
+
+    .semestre h2 {
+      margin-top: 0;
+      color: #d63384;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .materia {
+      display: flex;
+      align-items: center;
       justify-content: space-between;
-      padding: 6px 0;
-      border-bottom: 1px dotted #d88aaa;
+      padding: 5px 0;
     }
 
-    .total {
-      margin-top: 10px;
+    .materia.completada {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+
+    .progreso {
+      width: 90%;
+      margin: 30px auto;
+      background: #ffe0ec;
+      border-radius: 20px;
+      overflow: hidden;
+      height: 30px;
+      box-shadow: inset 0 0 5px #ff99c8;
+    }
+
+    .progreso-barra {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, #ff69b4, #ff85b3);
+      transition: width 0.5s;
+    }
+
+    .mensaje {
+      text-align: center;
+      font-size: 18px;
+      color: #c71585;
+      margin-bottom: 20px;
       font-weight: bold;
-      text-align: right;
-      color: #880e4f;
     }
 
-    @media (max-width: 600px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
+    button {
+      background: #ff99c8;
+      border: none;
+      padding: 10px 15px;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    button:disabled {
+      background: #ccc;
+      cursor: default;
     }
   </style>
 </head>
+
 <body>
-  <h1>Pénsum de Psicología</h1>
-  <div class="grid">
+  <header>
+    <i class="fas fa-brain"></i> Malla Interactiva - Psicología
+  </header>
 
-    <!-- Semestre 1 -->
-    <div class="semester">
-      <h2>Semestre 1</h2>
-      <div class="subject">Humanidades I <span>2</span></div>
-      <div class="subject">Inglés I <span>2</span></div>
-      <div class="subject">Problemas Sociales Globales <span>3</span></div>
-      <div class="subject">Aspectos Psicológicos del Comportamiento Humano <span>2</span></div>
-      <div class="subject">Filosofía e Historia de la Psicología <span>4</span></div>
-      <div class="subject">Psicobiología <span>3</span></div>
-      <div class="total">Total: 16</div>
-    </div>
-
-    <!-- Semestre 2 -->
-    <div class="semester">
-      <h2>Semestre 2</h2>
-      <div class="subject">Enfoque en Psicología Dinámica <span>3</span></div>
-      <div class="subject">Psicología Conductual <span>3</span></div>
-      <div class="subject">Estadística Descriptiva a Inferencial <span>3</span></div>
-      <div class="subject">Procesos Psicológicos Básicos y Complejos <span>4</span></div>
-      <div class="subject">Inglés II <span>2</span></div>
-      <div class="subject">Humanidades II <span>2</span></div>
-      <div class="subject">Neurociencia Cognitiva y del Comportamiento <span>2</span></div>
-      <div class="total">Total: 19</div>
-    </div>
-
-    <!-- Semestre 3 -->
-    <div class="semester">
-      <h2>Semestre 3</h2>
-      <div class="subject">Psicología Diferencial <span>3</span></div>
-      <div class="subject">Psicología Social <span>3</span></div>
-      <div class="subject">Psicología Cognitiva <span>3</span></div>
-      <div class="subject">Psicología Sistémica <span>3</span></div>
-      <div class="subject">Medición y Evaluación Psicológica <span>2</span></div>
-      <div class="subject">Inglés III <span>2</span></div>
-      <div class="subject">Humanidades III <span>2</span></div>
-      <div class="total">Total: 18</div>
-    </div>
-
-    <!-- Semestre 4 -->
-    <div class="semester">
-      <h2>Semestre 4</h2>
-      <div class="subject">Psicopatología <span>4</span></div>
-      <div class="subject">Procesos Psicosociales <span>2</span></div>
-      <div class="subject">Psicología Humanista <span>3</span></div>
-      <div class="subject">Semiología Psicológica <span>2</span></div>
-      <div class="subject">Psicología Evolutiva <span>3</span></div>
-      <div class="subject">Neuropsicología <span>2</span></div>
-      <div class="subject">Inglés IV <span>2</span></div>
-      <div class="total">Total: 18</div>
-    </div>
-
-    <!-- Semestre 5 -->
-    <div class="semester">
-      <h2>Semestre 5</h2>
-      <div class="subject">Psicología Organizacional <span>3</span></div>
-      <div class="subject">Psicología Comunitaria <span>3</span></div>
-      <div class="subject">Psicología Jurídica <span>3</span></div>
-      <div class="subject">Modelos Psicodiagnósticos <span>2</span></div>
-      <div class="subject">Psicología Educativa <span>3</span></div>
-      <div class="subject">Epistemologías <span>3</span></div>
-      <div class="total">Total: 20</div>
-    </div>
-
-    <!-- Semestre 6 -->
-    <div class="semester">
-      <h2>Semestre 6</h2>
-      <div class="subject">Técnicas de Intervención <span>4</span></div>
-      <div class="subject">Práctica Clínica <span>6</span></div>
-      <div class="subject">Curso Optativo I <span>2</span></div>
-      <div class="subject">Diseños de Investigación <span>3</span></div>
-      <div class="subject">Informes Psicológicos <span>2</span></div>
-      <div class="subject">Institucional I <span>2</span></div>
-      <div class="total">Total: 19</div>
-    </div>
-
-    <!-- Semestre 7 -->
-    <div class="semester">
-      <h2>Semestre 7</h2>
-      <div class="subject">Electiva I <span>2</span></div>
-      <div class="subject">Práctica Optativa I <span>6</span></div>
-      <div class="subject">Curso Optativo II <span>2</span></div>
-      <div class="subject">Proyectos de Investigación Social <span>3</span></div>
-      <div class="subject">Institucional II <span>2</span></div>
-      <div class="subject">Problemática Colombiana <span>3</span></div>
-      <div class="total">Total: 18</div>
-    </div>
-
-    <!-- Semestre 8 -->
-    <div class="semester">
-      <h2>Semestre 8</h2>
-      <div class="subject">Electiva II <span>2</span></div>
-      <div class="subject">Institucional III <span>2</span></div>
-      <div class="subject">Práctica Optativa II <span>6</span></div>
-      <div class="subject">Trabajo de Grado <span>4</span></div>
-      <div class="subject">Dinámica Sociocultural <span>3</span></div>
-      <div class="subject">Curso Optativo III <span>2</span></div>
-      <div class="total">Total: 19</div>
-    </div>
-
+  <div class="mensaje" id="mensaje">¡Comienza tu viaje en Psicología!</div>
+  <div class="progreso">
+    <div class="progreso-barra" id="barra"></div>
   </div>
+
+  <div class="container" id="malla"></div>
+
+  <script>
+    const semestres = [
+      {
+        nombre: "Semestre 1",
+        icono: "fas fa-book",
+        materias: ["Psicología General", "Biología Humana", "Historia de la Psicología"]
+      },
+      {
+        nombre: "Semestre 2",
+        icono: "fas fa-user-graduate",
+        materias: ["Neuroanatomía", "Desarrollo Humano", "Estadística I"]
+      },
+      {
+        nombre: "Semestre 3",
+        icono: "fas fa-brain",
+        materias: ["Neuropsicología", "Psicometría", "Psicología Social"]
+      },
+      {
+        nombre: "Semestre 4",
+        icono: "fas fa-comments",
+        materias: ["Teorías de la Personalidad", "Evaluación Psicológica", "Estadística II"]
+      },
+      {
+        nombre: "Semestre 5",
+        icono: "fas fa-heart",
+        materias: ["Psicología Clínica", "Entrevista Psicológica", "Psicopatología"]
+      },
+      {
+        nombre: "Semestre 6",
+        icono: "fas fa-hands-helping",
+        materias: ["Terapias Cognitivas", "Intervención en Crisis", "Psicología Educativa"]
+      },
+      {
+        nombre: "Semestre 7",
+        icono: "fas fa-users",
+        materias: ["Psicología Organizacional", "Ética Profesional", "Proyecto de Investigación"]
+      },
+      {
+        nombre: "Semestre 8",
+        icono: "fas fa-graduation-cap",
+        materias: ["Práctica Profesional", "Seminario de Grado", "Supervisión Clínica"]
+      }
+    ];
+
+    const container = document.getElementById('malla');
+    const barra = document.getElementById('barra');
+    const mensaje = document.getElementById('mensaje');
+
+    function actualizarProgreso() {
+      const total = semestres.length;
+      const completados = semestres.filter((_, i) => localStorage.getItem(`semestre_${i}`) === 'true').length;
+      const porcentaje = Math.round((completados / total) * 100);
+      barra.style.width = porcentaje + '%';
+
+      if (porcentaje === 0) mensaje.textContent = '¡Comienza tu viaje en Psicología!';
+      else if (porcentaje <= 25) mensaje.textContent = '¡Buen comienzo!';
+      else if (porcentaje <= 50) mensaje.textContent = '¡Vas muy bien!';
+      else if (porcentaje <= 75) mensaje.textContent = '¡Ya casi terminas!';
+      else mensaje.textContent = '🎓 ¡Lo lograste, psicóloga en camino!';
+    }
+
+    semestres.forEach((sem, i) => {
+      const div = document.createElement('div');
+      div.classList.add('semestre');
+
+      const icon = `<i class="${sem.icono}"></i>`;
+      div.innerHTML = `<h2>${icon} ${sem.nombre}</h2>`;
+
+      sem.materias.forEach((mat, j) => {
+        const matDiv = document.createElement('div');
+        matDiv.className = 'materia';
+        matDiv.innerHTML = `
+          <span>${mat}</span>
+          <input type="checkbox" id="materia_${i}_${j}">
+        `;
+
+        const check = matDiv.querySelector('input');
+        const key = `materia_${i}_${j}`;
+        if (localStorage.getItem(key) === 'true') {
+          check.checked = true;
+          matDiv.classList.add('completada');
+        }
+        check.addEventListener('change', () => {
+          localStorage.setItem(key, check.checked);
+          matDiv.classList.toggle('completada', check.checked);
+        });
+        div.appendChild(matDiv);
+      });
+
+      const btn = document.createElement('button');
+      btn.textContent = 'Marcar como completado';
+      if (localStorage.getItem(`semestre_${i}`) === 'true') {
+        div.classList.add('completado');
+        btn.textContent = 'Completado';
+        btn.disabled = true;
+      }
+
+      btn.addEventListener('click', () => {
+        div.classList.add('completado');
+        localStorage.setItem(`semestre_${i}`, 'true');
+        btn.textContent = 'Completado';
+        btn.disabled = true;
+        actualizarProgreso();
+      });
+
+      div.appendChild(btn);
+      container.appendChild(div);
+    });
+
+    actualizarProgreso();
+  </script>
 </body>
+
 </html>
+
 
