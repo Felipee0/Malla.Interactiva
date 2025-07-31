@@ -1,241 +1,185 @@
-<!DOCTYPE html>
-<html lang="es">
+import { useState, useEffect } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { CheckCircle } from "lucide-react";
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Malla Interactiva Psicología</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Quicksand', sans-serif;
-      background: #ffeef8;
-      color: #333;
-    }
+const semesters = [
+  {
+    name: "Semestre 1",
+    credits: 16,
+    subjects: [
+      "Humanidades I",
+      "Inglés I",
+      "Problemas Sociales Globales",
+      "Aspectos Psicológicos del Comportamiento Humano",
+      "Filosofía e Historia de la Psicología",
+      "Psicobiología"
+    ]
+  },
+  {
+    name: "Semestre 2",
+    credits: 19,
+    subjects: [
+      "Enfoque y Tendencias en Psicología Dinámica",
+      "Enfoque y Tendencias en Psicología Conductual",
+      "Estadística Descriptiva e Inferencial",
+      "Procesos Psicológicos Básicos y Complejos",
+      "Inglés II",
+      "Humanidades II",
+      "Neurociencia Cognitiva y del Comportamiento"
+    ]
+  },
+  {
+    name: "Semestre 3",
+    credits: 18,
+    subjects: [
+      "Psicología Diferencial",
+      "Enfoque y Tendencias en Psicología Social",
+      "Enfoque y Tendencias en Psicología Cognitiva",
+      "Enfoque y Tendencias en Psicología Sistémica",
+      "Medición y Evaluación de Procesos Psicológicos Básicos y Complejos",
+      "Inglés III",
+      "Humanidades III"
+    ]
+  },
+  {
+    name: "Semestre 4",
+    credits: 18,
+    subjects: [
+      "Psicopatología",
+      "Procesos Psicosociales de los Grupos y la Familia",
+      "Enfoque y Tendencias en Psicología Humanista",
+      "Semiología Psicológica",
+      "Psicología Evolutiva",
+      "Neuropsicología",
+      "Inglés IV"
+    ]
+  },
+  {
+    name: "Semestre 5",
+    credits: 20,
+    subjects: [
+      "Psicología en el Campo de las Organizaciones",
+      "Psicología en el Campo Social Comunitario",
+      "Psicología en el Campo Jurídico",
+      "Modelos Psicodiagnósticos",
+      "Psicología en el Campo Educativo",
+      "Epistemologías de las Ciencias Sociales"
+    ]
+  },
+  {
+    name: "Semestre 6",
+    credits: 19,
+    subjects: [
+      "Metodologías y Técnicas de Intervención Psicosocial",
+      "Práctica Clínica",
+      "Curso Optativo I",
+      "Diseños de Investigación",
+      "Informes Psicológicos",
+      "Institucional I"
+    ]
+  },
+  {
+    name: "Semestre 7",
+    credits: 18,
+    subjects: [
+      "Electiva I",
+      "Práctica Optativa I",
+      "Curso Optativo II",
+      "Formulación de Proyectos de Investigación e Intervención Social",
+      "Institucional II",
+      "Problemática Social Colombiana"
+    ]
+  },
+  {
+    name: "Semestre 8",
+    credits: 19,
+    subjects: [
+      "Electiva II",
+      "Institucional III",
+      "Práctica Optativa II",
+      "Trabajo de Grado",
+      "Dinámica Sociocultural Colombiana",
+      "Curso Optativo III"
+    ]
+  }
+];
 
-    header {
-      text-align: center;
-      background: linear-gradient(to right, #ffb6c1, #ffc0cb);
-      color: white;
-      padding: 20px 10px;
-      font-size: 24px;
-      position: sticky;
-      top: 0;
-    }
+export default function PensumInteractivo() {
+  const [completed, setCompleted] = useState(() => {
+    const stored = localStorage.getItem("completedSemesters");
+    return stored ? JSON.parse(stored) : Array(semesters.length).fill(false);
+  });
 
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 20px;
-    }
+  useEffect(() => {
+    localStorage.setItem("completedSemesters", JSON.stringify(completed));
+  }, [completed]);
 
-    .semestre {
-      background-color: white;
-      border-radius: 16px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      margin: 10px;
-      padding: 20px;
-      width: 280px;
-      transition: opacity 0.3s;
-      position: relative;
-    }
+  const toggleComplete = (index) => {
+    const newCompleted = [...completed];
+    newCompleted[index] = !newCompleted[index];
+    setCompleted(newCompleted);
+  };
 
-    .semestre.completado {
-      opacity: 0.5;
-    }
+  const completedCount = completed.filter(Boolean).length;
+  const progress = (completedCount / semesters.length) * 100;
 
-    .semestre h2 {
-      margin-top: 0;
-      color: #d63384;
-      font-size: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+  const messages = [
+    "¡Vamos, tú puedes!",
+    "¡Excelente progreso!",
+    "¡Ya falta poco!",
+    "¡Casi terminas!",
+    "¡Lo lograste!"
+  ];
 
-    .materia {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 5px 0;
-    }
+  const getMotivationalMessage = () => {
+    const index = Math.min(
+      Math.floor((completedCount / semesters.length) * messages.length),
+      messages.length - 1
+    );
+    return messages[index];
+  };
 
-    .materia.completada {
-      text-decoration: line-through;
-      opacity: 0.6;
-    }
+  return (
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4 text-center">Pénsum de Psicología Bogotá</h1>
+      <Progress value={progress} className="mb-4" />
+      <p className="text-center mb-6 font-medium">{getMotivationalMessage()}</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {semesters.map((sem, i) => (
+          <Card
+            key={i}
+            className={`transition-opacity duration-300 ${
+              completed[i] ? "opacity-50" : "opacity-100"
+            }`}
+          >
+            <CardContent className="p-4">
+              <div className="flex justify-between items-center mb-2">
+                <h2 className="text-lg font-semibold">{sem.name}</h2>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => toggleComplete(i)}
+                >
+                  <CheckCircle className="w-4 h-4 mr-1" /> Marcar
+                </Button>
+              </div>
+              <ul className="mb-2">
+                {sem.subjects.map((subj, j) => (
+                  <li key={j} className="text-sm list-disc ml-4">
+                    {subj}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-right text-sm font-medium">Total: {sem.credits} créditos</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+}
 
-    .progreso {
-      width: 90%;
-      margin: 30px auto;
-      background: #ffe0ec;
-      border-radius: 20px;
-      overflow: hidden;
-      height: 30px;
-      box-shadow: inset 0 0 5px #ff99c8;
-    }
-
-    .progreso-barra {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(to right, #ff69b4, #ff85b3);
-      transition: width 0.5s;
-    }
-
-    .mensaje {
-      text-align: center;
-      font-size: 18px;
-      color: #c71585;
-      margin-bottom: 20px;
-      font-weight: bold;
-    }
-
-    button {
-      background: #ff99c8;
-      border: none;
-      padding: 10px 15px;
-      color: white;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-
-    button:disabled {
-      background: #ccc;
-      cursor: default;
-    }
-  </style>
-</head>
-
-<body>
-  <header>
-    <i class="fas fa-brain"></i>  Psicología
-  </header>
-
-  <div class="mensaje" id="mensaje">¡Comienza tu viaje en Psicología!</div>
-  <div class="progreso">
-    <div class="progreso-barra" id="barra"></div>
-  </div>
-
-  <div class="container" id="malla"></div>
-
-  <script>
-    const semestres = [
-      {
-        nombre: "Semestre 1",
-        icono: "fas fa-book",
-        materias: ["Psicología General", "Biología Humana", "Historia de la Psicología"]
-      },
-      {
-        nombre: "Semestre 2",
-        icono: "fas fa-user-graduate",
-        materias: ["Neuroanatomía", "Desarrollo Humano", "Estadística I"]
-      },
-      {
-        nombre: "Semestre 3",
-        icono: "fas fa-brain",
-        materias: ["Neuropsicología", "Psicometría", "Psicología Social"]
-      },
-      {
-        nombre: "Semestre 4",
-        icono: "fas fa-comments",
-        materias: ["Teorías de la Personalidad", "Evaluación Psicológica", "Estadística II"]
-      },
-      {
-        nombre: "Semestre 5",
-        icono: "fas fa-heart",
-        materias: ["Psicología Clínica", "Entrevista Psicológica", "Psicopatología"]
-      },
-      {
-        nombre: "Semestre 6",
-        icono: "fas fa-hands-helping",
-        materias: ["Terapias Cognitivas", "Intervención en Crisis", "Psicología Educativa"]
-      },
-      {
-        nombre: "Semestre 7",
-        icono: "fas fa-users",
-        materias: ["Psicología Organizacional", "Ética Profesional", "Proyecto de Investigación"]
-      },
-      {
-        nombre: "Semestre 8",
-        icono: "fas fa-graduation-cap",
-        materias: ["Práctica Profesional", "Seminario de Grado", "Supervisión Clínica"]
-      }
-    ];
-
-    const container = document.getElementById('malla');
-    const barra = document.getElementById('barra');
-    const mensaje = document.getElementById('mensaje');
-
-    function actualizarProgreso() {
-      const total = semestres.length;
-      const completados = semestres.filter((_, i) => localStorage.getItem(`semestre_${i}`) === 'true').length;
-      const porcentaje = Math.round((completados / total) * 100);
-      barra.style.width = porcentaje + '%';
-
-      if (porcentaje === 0) mensaje.textContent = '¡Comienza tu viaje en Psicología!';
-      else if (porcentaje <= 25) mensaje.textContent = '¡Buen comienzo!';
-      else if (porcentaje <= 50) mensaje.textContent = '¡Vas muy bien!';
-      else if (porcentaje <= 75) mensaje.textContent = '¡Ya casi terminas!';
-      else mensaje.textContent = '🎓 ¡Lo lograste, psicóloga en camino!';
-    }
-
-    semestres.forEach((sem, i) => {
-      const div = document.createElement('div');
-      div.classList.add('semestre');
-
-      const icon = `<i class="${sem.icono}"></i>`;
-      div.innerHTML = `<h2>${icon} ${sem.nombre}</h2>`;
-
-      sem.materias.forEach((mat, j) => {
-        const matDiv = document.createElement('div');
-        matDiv.className = 'materia';
-        matDiv.innerHTML = `
-          <span>${mat}</span>
-          <input type="checkbox" id="materia_${i}_${j}">
-        `;
-
-        const check = matDiv.querySelector('input');
-        const key = `materia_${i}_${j}`;
-        if (localStorage.getItem(key) === 'true') {
-          check.checked = true;
-          matDiv.classList.add('completada');
-        }
-        check.addEventListener('change', () => {
-          localStorage.setItem(key, check.checked);
-          matDiv.classList.toggle('completada', check.checked);
-        });
-        div.appendChild(matDiv);
-      });
-
-      const btn = document.createElement('button');
-      btn.textContent = 'Marcar como completado';
-      if (localStorage.getItem(`semestre_${i}`) === 'true') {
-        div.classList.add('completado');
-        btn.textContent = 'Completado';
-        btn.disabled = true;
-      }
-
-      btn.addEventListener('click', () => {
-        div.classList.add('completado');
-        localStorage.setItem(`semestre_${i}`, 'true');
-        btn.textContent = 'Completado';
-        btn.disabled = true;
-        actualizarProgreso();
-      });
-
-      div.appendChild(btn);
-      container.appendChild(div);
-    });
-
-    actualizarProgreso();
-  </script>
-</body>
-
-</html>
 
 
